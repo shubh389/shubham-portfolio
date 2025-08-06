@@ -1,0 +1,648 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mobile navigation performance optimizations */
+.mobile-nav-panel {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+.mobile-nav-button {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Smooth transitions for mobile */
+@media (max-width: 1024px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .mobile-nav-overlay {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@layer base {
+  /* Smooth scrolling for the entire document */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Account for fixed navbar */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+
+  /* Enhanced smooth scrolling with custom easing */
+  * {
+    scroll-behavior: smooth;
+  }
+
+  /* Optimize scrolling performance */
+  body {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain; /* Prevent scroll chaining */
+  }
+
+  /* Smooth scrolling for all elements */
+  :focus {
+    scroll-margin-top: 80px; /* Offset for fixed navbar when focusing */
+  }
+
+  /* Enhanced scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 0px; /* Hide scrollbar width */
+    background: transparent; /* Hide scrollbar background */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent; /* Hide scrollbar track */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent; /* Hide scrollbar thumb */
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: transparent; /* Hide scrollbar thumb on hover */
+  }
+
+  /* Hide scrollbar for Firefox */
+  html {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Hide scrollbar for IE and Edge */
+  body {
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  /* Hide scrollbar for all scrollable elements */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+    width: 0px;
+    background: transparent;
+  }
+
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 210 40% 98%;
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    scroll-behavior: smooth;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Light mode styles */
+  .light {
+    /* Custom scrollbar for light mode */
+    scrollbar-color: #06b6d4 #f1f5f9;
+  }
+
+  .light ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #06b6d4, #a855f7);
+  }
+
+  .light ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #0891b2, #9333ea);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #06b6d4, #a855f7);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #0891b2, #9333ea);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #06b6d4 transparent;
+  }
+}
+
+@layer components {
+  /* Modern glass effect */
+  .glass {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Enhanced glassmorphism */
+  .glass-morphism {
+    backdrop-filter: blur(20px) saturate(200%) brightness(120%);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .glass-morphism::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+  }
+
+  .glass-morphism:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15),
+      0 0 30px rgba(6, 182, 212, 0.1);
+  }
+
+  /* Tech grid pattern */
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: grid-move 20s linear infinite;
+  }
+
+  @keyframes grid-move {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 50px 50px;
+    }
+  }
+
+  /* Gradient text effect */
+  .gradient-text {
+    @apply bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent;
+  }
+
+  /* Hover glow effect */
+  .hover-glow {
+    transition: all 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+  }
+
+  /* Animated background */
+  .animated-bg {
+    background: linear-gradient(-45deg, #000000, #1a1a1a, #0a0a0a, #111111);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* Pulse glow animation */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    from {
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+    }
+    to {
+      box-shadow:
+        0 0 30px rgba(6, 182, 212, 0.4),
+        0 0 40px rgba(168, 85, 247, 0.2);
+    }
+  }
+
+  /* Loading shimmer effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+}
+
+@layer utilities {
+  /* Text utilities */
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Background utilities */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Hide scrollbar */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Comprehensive Spline watermark removal */
+  [data-spline="watermark"],
+  .spline-watermark,
+  [class*="watermark"],
+  [id*="watermark"],
+  div[style*="position: absolute"][style*="bottom: 16px"][style*="right: 16px"],
+  div[style*="position: absolute"][style*="bottom: 8px"][style*="right: 8px"],
+  div[style*="position: absolute"][style*="bottom: 12px"][style*="right: 12px"],
+  div[style*="position: fixed"][style*="bottom: 16px"][style*="right: 16px"],
+  div[style*="position: fixed"][style*="bottom: 8px"][style*="right: 8px"],
+  div[style*="position: fixed"][style*="bottom: 12px"][style*="right: 12px"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Enhanced Spline watermark removal - More comprehensive targeting */
+  [data-spline="watermark"],
+  .spline-watermark,
+  a[href*="spline"],
+  a[href*="spline.design"],
+  div[style*="position: absolute"][style*="bottom"],
+  div[style*="position: fixed"][style*="bottom"],
+  .spline-container a,
+  .spline-container div[style*="bottom"][style*="right"],
+  .spline-container div[style*="position: absolute"][style*="bottom"],
+  .spline-container div[style*="position: fixed"][style*="bottom"],
+  /* Target specific positioning combinations */
+  *[style*="bottom: 16px"][style*="right: 16px"],
+  *[style*="bottom: 8px"][style*="right: 8px"],
+  *[style*="bottom: 12px"][style*="right: 12px"],
+  *[style*="bottom: 10px"][style*="right: 10px"],
+  *[style*="bottom: 14px"][style*="right: 14px"],
+  *[style*="bottom: 18px"][style*="right: 18px"],
+  *[style*="bottom: 20px"][style*="right: 20px"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    transform: scale(0) !important;
+  }
+
+  /* Hide any element containing spline attribution text */
+  *[style*="bottom"][style*="right"]:has-text("spline"),
+  *[style*="bottom"][style*="right"]:has-text("Spline"),
+  *[style*="bottom"][style*="right"]:has-text("built"),
+  *[style*="bottom"][style*="right"]:has-text("Made"),
+  *[style*="bottom"][style*="right"]:has-text("Powered") {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* Additional Spline container cleanup */
+  .spline-container div:last-child {
+    position: relative;
+  }
+
+  .spline-container div:last-child > div[style*="bottom"][style*="right"] {
+    display: none !important;
+  }
+
+  /* Hide any bottom-right positioned small elements that might be watermarks */
+  div[style*="position: absolute"][style*="bottom"][style*="right"] {
+    font-size: 0 !important;
+    line-height: 0 !important;
+  }
+
+  div[style*="position: absolute"][style*="bottom"][style*="right"]:empty {
+    display: none !important;
+  }
+
+  /* Additional protection against dynamic watermarks */
+  .spline-container * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Ensure only canvas and necessary elements are visible */
+  .spline-container > * {
+    position: relative !important;
+  }
+
+  .spline-container canvas {
+    z-index: 1 !important;
+  }
+
+  /* Nuclear option - hide anything that might be a watermark in bottom-right corner */
+  .spline-container *[style*="position"][style*="bottom"][style*="right"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+/* Performance optimizations for smooth scrolling */
+.scroll-smooth {
+  scroll-behavior: smooth !important;
+}
+
+.scroll-performance {
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: scroll-position;
+}
+
+/* Section scroll padding for better navigation */
+section {
+  scroll-margin-top: 80px; /* Account for fixed header */
+}
+
+/* Smooth transitions for scrollable elements */
+.scrollable-element {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scrollable-element::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Hide scrollbars for specific components */
+.mobile-nav-overlay,
+.spline-container,
+.scroll-area {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.mobile-nav-overlay::-webkit-scrollbar,
+.spline-container::-webkit-scrollbar,
+.scroll-area::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Prevent scroll bounce on iOS */
+@media (max-width: 768px) {
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+    position: relative;
+  }
+}
+
+/* Mobile-specific styles for Spline animations */
+@media (max-width: 768px) {
+  /* Ensure Spline has proper touch handling on mobile */
+  .spline-container {
+    touch-action: auto !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .spline-container canvas {
+    touch-action: auto !important;
+    pointer-events: auto !important;
+    cursor: auto !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+  }
+
+  /* Disable custom cursor on mobile to prevent Spline interference */
+  .spline-container * {
+    cursor: auto !important;
+  }
+
+  /* Enhanced mobile interaction for Spline */
+  .spline-container iframe,
+  .spline-container canvas,
+  .spline-container webgl {
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+    will-change: transform !important;
+  }
+
+  /* Prevent any scrolling interference with Spline touch */
+  .spline-container {
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  /* Ensure touch events work properly */
+  .spline-container * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  /* Force hardware acceleration for better performance */
+  .spline-container canvas {
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-perspective: 1000 !important;
+    perspective: 1000 !important;
+  }
+}
