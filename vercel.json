@@ -1,25 +1,11 @@
 {
-  "version": 2,
-  "builds": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/spa",
+  "framework": "vite",
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["dist/**"]
-      }
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/dist/server/node-build.mjs"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/spa/$1"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
