@@ -45,10 +45,10 @@ export function EnhancedNavbar({
   ];
 
   const socialLinks = [
-    { icon: Github, href: "#", label: "GitHub", color: "hover:text-gray-600" },
+    { icon: Github, href: "https://github.com/shubh389", label: "GitHub", color: "hover:text-gray-600" },
     {
       icon: Linkedin,
-      href: "#",
+      href: "https://www.linkedin.com/in/shubham-dev-5a4ba8320/",
       label: "LinkedIn",
       color: "hover:text-blue-600",
     },

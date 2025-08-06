@@ -114,7 +114,7 @@ export default function Index() {
       image: "/QuikCart.png",
       technologies: ["Next.js", "Node.js", "Express.js", "MongoDB Atlas", "Clerk Auth" , "Tailwind CSS", "Vercel"],
       liveUrl: "https://quick-cart-bwkt.vercel.app/",
-      githubUrl: "#",
+      githubUrl: "https://github.com/shubh389/QuickCart",
       gradient: "from-blue-600 via-purple-600 to-blue-800",
     },
     {
@@ -124,7 +124,7 @@ export default function Index() {
       image: "/Seva Sankalp.png",
       technologies: ["Next.js", "Tailwind CSS", "Node.js", "Express.js", "Solidity", "Ethereum", "Hardhat", "Web3.js", "TensorFlow","OpenCV"," IPFS", "MongoDB", "MetaMask"],
       liveUrl: "https://seva-sankalp-roan.vercel.app/",
-      githubUrl: "#",
+      githubUrl: "https://github.com/shubh389/Seva-Sankalp",
       gradient: "from-green-600 via-teal-600 to-green-800",
     },
     {
@@ -134,7 +134,7 @@ export default function Index() {
       image: "/AnnaDaan.png",
       technologies: ["React", "Node.js", "Express.js", "MongoDB Atlas", "Clerk Auth" , "Tailwind CSS", "Vercel"],
       liveUrl: "https://anndaaan.vercel.app/",
-      githubUrl: "",
+      githubUrl: "https://github.com/shubh389/Anndaaan",
       gradient: "from-purple-600 via-pink-600 to-purple-800",
     },
   ];
@@ -1034,13 +1034,17 @@ export default function Index() {
 
               {/* Social Links */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Button className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 flex-1">
+                <Button 
+                  className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 flex-1"
+                  onClick={() => window.open("https://github.com/shubh389", '_blank')}
+                >
                   <Github className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   <span className="text-sm sm:text-base">GitHub</span>
                 </Button>
                 <Button
                   variant="outline"
                   className="border-white/20 text-white hover:bg-white/10 flex-1"
+                  onClick={() => window.open("https://www.linkedin.com/in/shubham-dev-5a4ba8320/", '_blank')}
                 >
                   <Globe className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   <span className="text-sm sm:text-base">LinkedIn</span>

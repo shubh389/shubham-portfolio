@@ -246,7 +246,7 @@ export function MobileNav({ activeSection, scrollToSection }: MobileNavProps) {
                       size="sm"
                       className="w-full border-white/20 text-white/80 hover:bg-white/5 hover:border-purple-400/50"
                       onClick={() => {
-                        window.open("https://github.com", "_blank");
+                        window.open("https://github.com/shubh389", "_blank");
                         setIsOpen(false);
                       }}
                     >
